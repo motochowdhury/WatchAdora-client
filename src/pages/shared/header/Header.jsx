@@ -1,7 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { CgMenuMotion } from "react-icons/cg";
+import watchAdoraLogo from "../../../assets/logo.png";
 
 const Header = () => {
-  return <nav>nav</nav>;
+  const [isOpen, setOpen] = useState(false);
+  return (
+    <div className="w-full backdrop-blur-sm z-50 bg-white/20 h-12 fixed inset-0">
+      <nav className="w-full flex items-center justify-between max-w-7xl mx-auto">
+        <div>
+          <img src={watchAdoraLogo} className="w-32" alt="" />
+        </div>
+        <button className="lg:hidden" onClick={() => setOpen(!isOpen)}>
+          <CgMenuMotion />
+        </button>
+        <div className="lg:flex lg:flex-row space-x-4 hidden">
+          <Link to="/">Home</Link>
+          <Link to="/">Home</Link>
+          <Link to="/">Home</Link>
+          <Link to="/">Home</Link>
+        </div>
+
+        <div className="space-x-4 lg:block hidden">
+          <Link>DashBoard</Link>
+          <button>LogOut</button>
+        </div>
+
+        {isOpen && (
+          <div className="flex flex-col justify-center items-center lg:hidden absolute inset-0 bg-white dark:bg-black dark:text-white h-screen w-full right-0 ">
+            <button
+              className="absolute top-0 right-0 mr-10"
+              onClick={() => setOpen(!isOpen)}>
+              X
+            </button>
+            <Link to="/">Home</Link>
+            <Link to="/">Home</Link>
+            <Link to="/">Home</Link>
+            <Link to="/">Home</Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
 };
 
 export default Header;
