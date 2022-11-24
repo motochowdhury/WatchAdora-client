@@ -7,14 +7,14 @@ const Header = () => {
   const [isOpen, setOpen] = useState(false);
   return (
     <div className="w-full backdrop-blur-sm z-50 bg-white/20 h-12 fixed inset-0">
-      <nav className="w-full flex items-center justify-between max-w-7xl mx-auto">
+      <nav className="w-full lg:px-0 px-8 flex items-center justify-between max-w-6xl mx-auto">
         <div>
           <img src={watchAdoraLogo} className="w-32" alt="" />
         </div>
         <button className="lg:hidden" onClick={() => setOpen(!isOpen)}>
           <CgMenuMotion />
         </button>
-        <div className="lg:flex lg:flex-row space-x-4 hidden">
+        <div className="lg:flex lg:flex-row space-x-4 hidden text-white font-semibold">
           <Link to="/">Home</Link>
           <Link to="/">Home</Link>
           <Link to="/">Home</Link>
@@ -27,7 +27,7 @@ const Header = () => {
         </div>
 
         {isOpen && (
-          <div className="flex flex-col justify-center items-center lg:hidden absolute inset-0 bg-white dark:bg-black dark:text-white h-screen w-full right-0 ">
+          <div className="flex flex-col justify-center items-center lg:hidden absolute inset-0 bg-white dark:bg-black dark:text-white h-screen w-1/2 right-0 ">
             <button
               className="absolute top-0 right-0 mr-10"
               onClick={() => setOpen(!isOpen)}>

@@ -7,6 +7,10 @@ module.exports = {
       backgroundImage: {
         heroImg: "url('/src/assets/heroWatch.jpg')",
       },
+      fontFamily: {
+        roboto: ["Roboto Slab", "serif"],
+        poppins: ["Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [],
