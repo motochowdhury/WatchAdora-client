@@ -10,7 +10,6 @@ const Banner = () => {
               <span className="text-orange-500 lg:text-5xl text-4xl z-50">
                 WatchAdora
               </span>
-              {/* <img src={underline} className="w-72 -top-3 absolute" alt="" /> */}
             </h1>
             <p className="text-gray-100 font-roboto lg:text-sm text-xs whitespace-normal">
               The best Watch Resaile website in Bangladesh, We are collect old

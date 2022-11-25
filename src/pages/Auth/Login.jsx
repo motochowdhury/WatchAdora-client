@@ -2,6 +2,7 @@ import React from "react";
 import loginImg from "../../assets/login img@3x.png";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -62,6 +63,12 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <p className="text-center font-roboto text-sm">
+            Don't have an Account?{" "}
+            <Link className="text-orange-500" to="/register">
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

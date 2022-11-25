@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CgMenuMotion } from "react-icons/cg";
 import watchAdoraLogo from "../../../assets/logo.png";
+import { format } from "date-fns";
 
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
+  const date = () => {
+    console.log(format(new Date(), "PPpp"));
+  };
   return (
     <div className="w-full backdrop-blur-sm z-50 bg-white/20 h-12 fixed inset-0">
       <nav className="w-full lg:px-0 px-8 flex items-center justify-between max-w-6xl mx-auto">
@@ -23,7 +27,7 @@ const Header = () => {
 
         <div className="space-x-4 lg:block hidden">
           <Link>DashBoard</Link>
-          <button>LogOut</button>
+          <button onClick={date}>LogOut</button>
         </div>
 
         {isOpen && (
