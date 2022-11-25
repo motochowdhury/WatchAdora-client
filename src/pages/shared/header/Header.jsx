@@ -14,7 +14,7 @@ const Header = () => {
         <button className="lg:hidden" onClick={() => setOpen(!isOpen)}>
           <CgMenuMotion />
         </button>
-        <div className="lg:flex lg:flex-row space-x-4 hidden text-white font-semibold">
+        <div className="lg:flex lg:flex-row space-x-4 hidden text-orange-500 font-semibold">
           <Link to="/">Home</Link>
           <Link to="/">Home</Link>
           <Link to="/">Home</Link>
