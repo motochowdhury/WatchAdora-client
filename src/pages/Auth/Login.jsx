@@ -1,8 +1,14 @@
 import React from "react";
 import loginImg from "../../assets/login img@3x.png";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
+  const loginUser = (data) => {
+    const { email, pass } = data;
+    console.log(email, pass, data);
+  };
   return (
     <div className="py-20">
       <div className="lg:w-1/2 w-10/12 shadow-xl mx-auto lg:flex h-[600px]">
@@ -33,25 +39,29 @@ const Login = () => {
             <span className="flex-shrink mx-4 text-gray-400">or</span>
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
-          <form>
+          <form onSubmit={handleSubmit(loginUser)}>
             <div className="w-10/12 lg:w-9/12 dark:text-white mx-auto space-y-3 my-5">
               <input
                 className="w-full border-b border-slate-200 bg-transparent outline-none py-1"
                 type="email"
                 placeholder="Email"
+                {...register("email")}
               />
               <input
                 className="w-full border-b border-slate-200 bg-transparent outline-none py-1"
                 type="text"
                 placeholder="password"
+                {...register("pass")}
               />
             </div>
+            <div className="flex justify-center my-5">
+              <button
+                type="submit"
+                className="btn bg-orange-500 hover:bg-orange-400 w-1/2 text-white font-roboto py-2">
+                Login
+              </button>
+            </div>
           </form>
-          <div className="flex justify-center my-5">
-            <button className="btn bg-orange-500 hover:bg-orange-400 w-1/2 text-white font-roboto py-2">
-              Login
-            </button>
-          </div>
         </div>
       </div>
     </div>
