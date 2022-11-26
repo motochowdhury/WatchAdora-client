@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import { CgMenuMotion } from "react-icons/cg";
 import watchAdoraLogo from "../../../assets/logo.png";
 import { format } from "date-fns";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Header = () => {
+  const { logOutUser } = useContext(AuthContext);
   const [isOpen, setOpen] = useState(false);
-  const date = () => {
-    console.log(format(new Date(), "PPpp"));
+  const logOut = () => {
+    logOutUser()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   return (
     <div className="w-full backdrop-blur-sm z-50 bg-white/20 h-12 fixed inset-0">
@@ -27,7 +32,7 @@ const Header = () => {
 
         <div className="space-x-4 lg:block hidden">
           <Link>DashBoard</Link>
-          <button onClick={date}>LogOut</button>
+          <button onClick={logOut}>LogOut</button>
         </div>
 
         {isOpen && (

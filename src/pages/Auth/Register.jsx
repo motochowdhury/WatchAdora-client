@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaRegFileImage } from "react-icons/fa";
+import { uploadImage } from "../../api/registerApi";
 import loginImg from "../../assets/login img@3x.png";
+import { AuthContext } from "../../contexts/AuthProvider";
 const Register = () => {
+  const { createUserWithEmail, updateUserProfile, user, loginWithGoogle } =
+    useContext(AuthContext);
+  const [imgUrl, setImgUrl] = useState("");
   const { register, handleSubmit } = useForm();
   const createUser = (data) => {
-    const { email, pass } = data;
-    console.log(email, pass, data);
+    const { email, pass, userRule, name, img } = data;
+    createUserWithEmail(email, pass)
+      .then((result) => {
+        uploadImage(img[0]).then((data) => setImgUrl(data));
+        updateUserProfile(name, imgUrl);
+      })
+      .catch((err) => console.log(err.message));
+
+    // console.log(email, pass, userRule, img[0], data, imgUrl);
+    console.log(user);
   };
 
-  //   const preview = () => {
-  //     console.log("hii");
-  //   };
+  const googleLogin = () => {
+    loginWithGoogle()
+      .then((res) => console.log(res.user))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="py-20">
       <div className="lg:w-1/2 w-10/12 shadow-xl mx-auto lg:flex h-[600px]">
@@ -32,7 +49,9 @@ const Register = () => {
             </p>
           </div>
           <div className="flex justify-center space-x-2 mb-5">
-            <button className="btn border-2 border-green-300 hover:bg-green-300 dark:bg-white/20 py-2 px-2 flex items-center dark:text-white dark:hover:bg-green-300">
+            <button
+              onClick={googleLogin}
+              className="btn border-2 border-green-300 hover:bg-green-300 dark:bg-white/20 py-2 px-2 flex items-center dark:text-white dark:hover:bg-green-300">
               <FaGoogle className="mr-3" /> Login With Google
             </button>
           </div>
@@ -83,7 +102,7 @@ const Register = () => {
                   type="radio"
                   value="buyer"
                   className=""
-                  {...register("userType")}
+                  {...register("userRule")}
                 />
                 <label className="ml-2 mr-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Buyer
@@ -92,7 +111,7 @@ const Register = () => {
                   type="radio"
                   value="seller"
                   className=""
-                  {...register("userType")}
+                  {...register("userRule")}
                 />
                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                   Seller

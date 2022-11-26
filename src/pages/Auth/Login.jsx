@@ -3,12 +3,17 @@ import loginImg from "../../assets/login img@3x.png";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
+  const { loginUserByEmail, loginWithGoogle } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const loginUser = (data) => {
     const { email, pass } = data;
-    console.log(email, pass, data);
+    loginUserByEmail(email, pass)
+      .then((res) => console.log(res.user))
+      .catch((err) => console.log(err.message));
   };
   return (
     <div className="py-20">
