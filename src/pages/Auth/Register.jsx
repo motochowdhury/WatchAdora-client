@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaRegFileImage } from "react-icons/fa";
-import { uploadImage } from "../../api/registerApi";
+import { saveUser, uploadImage } from "../../api/registerApi";
 import loginImg from "../../assets/login img@3x.png";
 import { AuthContext } from "../../contexts/AuthProvider";
 const Register = () => {
@@ -12,10 +12,12 @@ const Register = () => {
   const { register, handleSubmit } = useForm();
   const createUser = (data) => {
     const { email, pass, userRule, name, img } = data;
+    const user = { name, email, status: false, userRule, img: imgUrl };
     createUserWithEmail(email, pass)
       .then((result) => {
         uploadImage(img[0]).then((data) => setImgUrl(data));
         updateUserProfile(name, imgUrl);
+        saveUser(user);
       })
       .catch((err) => console.log(err.message));
 
@@ -35,7 +37,7 @@ const Register = () => {
         <div className="bg-orange-500 w-1/2 hidden lg:flex items-center justify-center rounded-l-md">
           <img src={loginImg} className="w-10/12" alt="" />
         </div>
-        <div className="rounded-md lg:rounded-r-md rounded-md dark:bg-white/25 w-full lg:my-0 my-10 h-full">
+        <div className="rounded-md lg:rounded-r-md dark:bg-white/25 w-full lg:my-0 my-10 h-full">
           <div className="ml-5 text-center py-5">
             <h2 className="font-poppins text-lg dark:text-white ">
               Welcome to

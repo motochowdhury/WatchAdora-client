@@ -16,7 +16,7 @@ const Categories = () => {
 
   console.log(categories);
   return (
-    <div className="w-ful bg-white dark:bg-slate-800 relative mb-10">
+    <div className="w-full bg-white dark:bg-slate-800 relative mb-10">
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 absolute inset-0 -top-16 w-10/12 mx-auto group">
         {isLoading
           ? "loading"

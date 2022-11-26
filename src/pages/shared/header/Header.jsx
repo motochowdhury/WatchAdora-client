@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CgMenuMotion } from "react-icons/cg";
 import watchAdoraLogo from "../../../assets/logo.png";
-import { format } from "date-fns";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
@@ -36,7 +35,7 @@ const Header = () => {
         </div>
 
         {isOpen && (
-          <div className="flex flex-col justify-center items-center lg:hidden absolute inset-0 bg-white dark:bg-black dark:text-white h-screen w-1/2 right-0 ">
+          <div className="flex flex-col justify-center items-center lg:hidden absolute inset-0 bg-orange-500 dark:bg-black h-screen w-1/2 right-0 ">
             <button
               className="absolute top-0 right-0 mr-10"
               onClick={() => setOpen(!isOpen)}>

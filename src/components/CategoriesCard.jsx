@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const CategoriesCard = ({ category }) => {
   const { catName, catId, img } = category;
   return (
-    <Link to={`/product/${catId}`}>
+    <Link to={`/products/${catId}`}>
       <div className="bg-white dark:bg-slate-500 group-hover:blur-sm hover:!blur-none group-hover:scale-[0.90] hover:!scale-100 duration-500 shadow-xl flex items-center">
         <div className="flex items-center">
           <div className="w-1/2">

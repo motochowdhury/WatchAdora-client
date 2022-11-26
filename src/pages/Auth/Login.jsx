@@ -15,13 +15,19 @@ const Login = () => {
       .then((res) => console.log(res.user))
       .catch((err) => console.log(err.message));
   };
+
+  const googleLogin = () => {
+    loginWithGoogle()
+      .then((res) => console.log(res.user))
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="py-20">
       <div className="lg:w-1/2 w-10/12 shadow-xl mx-auto lg:flex h-[600px]">
         <div className="bg-orange-500 w-1/2 hidden lg:flex items-center justify-center rounded-l-md">
           <img src={loginImg} className="w-10/12" alt="" />
         </div>
-        <div className="rounded-md lg:rounded-r-md rounded-md dark:bg-white/25 w-full lg:my-0 my-10 h-full">
+        <div className="rounded-md lg:rounded-r-md dark:bg-white/25 w-full lg:my-0 my-10 h-full">
           <div className="ml-5 text-center py-5">
             <h2 className="font-poppins text-lg dark:text-white ">
               Welcome to
@@ -35,7 +41,9 @@ const Login = () => {
             </p>
           </div>
           <div className="flex justify-center space-x-2 mb-5">
-            <button className="btn border-2 border-green-300 hover:bg-green-300 dark:bg-white/20 py-2 px-2 flex items-center dark:text-white dark:hover:bg-green-300">
+            <button
+              onClick={googleLogin}
+              className="btn border-2 border-green-300 hover:bg-green-300 dark:bg-white/20 py-2 px-2 flex items-center dark:text-white dark:hover:bg-green-300">
               <FaGoogle className="mr-3" /> Login With Google
             </button>
           </div>
