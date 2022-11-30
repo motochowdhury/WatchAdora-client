@@ -30,6 +30,29 @@ const Login = () => {
       .catch((err) => toast.error(err.message));
   };
 
+  const googleLogin = () => {
+    loginWithGoogle()
+      .then((res) => {
+        const mail = res?.user?.email;
+        fetch(`${process.env.REACT_APP_SERVER_API}/jwt?email=${mail}`)
+          .then((res) => res.json())
+          .then((token) =>
+            localStorage.setItem("access-token", token?.accesstoken)
+          );
+        const { displayName: name, photoURL: img, email } = res?.user;
+        const user = {
+          name,
+          email,
+          status: "unverified",
+          userRule: "buyer",
+          img,
+        };
+        saveUser(user);
+        toast.success("Login Successful");
+        navigate(state?.from || "/", { replace: true });
+      })
+      .catch((err) => toast.error(err.message));
+  };
   return (
     <div className="py-20">
       <div className="lg:w-1/2 w-10/12 shadow-xl mx-auto lg:flex h-[600px]">
