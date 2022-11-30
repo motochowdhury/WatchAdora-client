@@ -3,10 +3,10 @@ import { useState } from "react";
 
 const useUser = (email) => {
   const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [processing, setProccessing] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setProccessing(true);
     fetch(`${process.env.REACT_APP_SERVER_API}/user?email=${email}`, {
       headers: {
         authorization: `bearar ${localStorage.getItem("access-token")}`,
@@ -15,12 +15,12 @@ const useUser = (email) => {
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
-        setLoading(false);
+        setProccessing(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => setProccessing(false));
   }, [email]);
 
-  return [user, loading];
+  return [user, processing];
 };
 
 export default useUser;

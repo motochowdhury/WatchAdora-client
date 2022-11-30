@@ -19,10 +19,9 @@ const Advertisement = () => {
       }).then((res) => res.json()),
   });
 
-  console.log(data);
   return (
     <>
-      {data?.length !== 0 && (
+      {!data?.length <= 0 && (
         <div className="w-1/2 my-10 mx-auto">
           <h1 className="text-3xl font-poppins text-center my-10">
             Advertisement
