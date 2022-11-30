@@ -19,3 +19,18 @@ export const addProduct = (data, setLoading, reset) => {
       toast.success(err);
     });
 };
+
+export const deleteMyProduct = (id, refetch) => {
+  fetch(`${process.env.REACT_APP_SERVER_API}/product?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      authorization: `bearar ${localStorage.getItem("access-token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Product deleted Successfully");
+      refetch();
+    })
+    .catch((err) => toast.error(err.message));
+};
