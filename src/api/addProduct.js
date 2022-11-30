@@ -49,3 +49,18 @@ export const unsoldPro = (id, refetch) => {
     })
     .catch((err) => toast.error(err.message));
 };
+
+export const advertiseProd = (id, refetch) => {
+  fetch(`${process.env.REACT_APP_SERVER_API}/product/ad?id=${id}`, {
+    method: "PATCH",
+    headers: {
+      authorization: `bearar ${localStorage.getItem("access-token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Product Advertisement Enable");
+      refetch();
+    })
+    .catch((err) => toast.error(err.message));
+};
