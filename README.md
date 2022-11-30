@@ -2,6 +2,10 @@
 
 A resale Website, Where consumers can sell and buy used Watches.
 Live Site - https://watch-adora.web.app/
+## Admin-info
+email: motochowdhury@gmail.com
+pass: 123456
+
 
 ## Features
 + Login User
