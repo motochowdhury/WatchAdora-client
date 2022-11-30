@@ -15,36 +15,6 @@ const AddProduct = () => {
   const [user] = useUser(fiUser?.email);
   const { email: sellerEmail, name: sellerName, status, img: sellerImg } = user;
   const { register, handleSubmit, reset } = useForm();
-  const productData = async (data) => {
-    const {
-      img,
-      name,
-      location,
-      used,
-      resalePrice,
-      originalPrice,
-      catId,
-      condition,
-    } = data;
-    setProccessing(true);
-    const imgUrl = await uploadImage(img[0]);
-    const product = {
-      productImg: imgUrl,
-      productName: name,
-      location,
-      usingTime: used,
-      condition,
-      resalePrice,
-      originalPrice,
-      postAt: format(new Date(), "PP"),
-      catId,
-      ad: false,
-      paymentStatus: "unpaid",
-      seller: { sellerEmail, sellerName, sellerImg, status },
-    };
-
-    addProduct(product, setProccessing, reset);
-  };
 
   return (
     <div className="mt-20">
