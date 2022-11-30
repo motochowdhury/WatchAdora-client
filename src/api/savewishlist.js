@@ -35,3 +35,18 @@ export const bookWishProd = (id, prod, refetch) => {
       refetch();
     });
 };
+
+export const deleteWishProd = (id, refetch) => {
+  fetch(`${process.env.REACT_APP_SERVER_API}/wishlist?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      authorization: `bearar ${localStorage.getItem("access-token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Product Deleted");
+      refetch();
+    })
+    .catch((err) => toast.error(err.message));
+};
