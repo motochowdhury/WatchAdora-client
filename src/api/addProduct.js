@@ -34,3 +34,18 @@ export const deleteMyProduct = (id, refetch) => {
     })
     .catch((err) => toast.error(err.message));
 };
+
+export const unsoldPro = (id, refetch) => {
+  fetch(`${process.env.REACT_APP_SERVER_API}/product/unsold?id=${id}`, {
+    method: "PATCH",
+    headers: {
+      authorization: `bearar ${localStorage.getItem("access-token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      toast.success("Product Unsolded SUccessfully");
+      refetch();
+    })
+    .catch((err) => toast.error(err.message));
+};
