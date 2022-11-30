@@ -18,7 +18,11 @@ export const uploadImage = async (img) => {
 
 export const saveUser = (user) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_API}/users`, user)
+    .post(`${process.env.REACT_APP_SERVER_API}/users`, user, {
+      headers: {
+        authorization: `bearar ${localStorage.getItem("access-token")}`,
+      },
+    })
     .then((data) => console.log(data))
     .catch((err) => console.log("error from save user", err));
 };

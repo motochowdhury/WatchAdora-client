@@ -1,34 +1,69 @@
 import React, { useContext } from "react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaRegFileImage } from "react-icons/fa";
-import { saveUser, uploadImage } from "../../api/registerApi";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import loginImg from "../../assets/login img@3x.png";
+import SmallLoader from "../../components/SmallLoader";
+import { saveUser, uploadImage } from "../../api/registerApi";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useState } from "react";
 const Register = () => {
-  const { createUserWithEmail, updateUserProfile, user, loginWithGoogle } =
+  const { createUserWithEmail, updateUserProfile, loginWithGoogle } =
     useContext(AuthContext);
-  const [imgUrl, setImgUrl] = useState("");
+  const [isProccessing, setProccessing] = useState(false);
   const { register, handleSubmit } = useForm();
-  const createUser = (data) => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const createUser = async (data) => {
     const { email, pass, userRule, name, img } = data;
-    const user = { name, email, status: false, userRule, img: imgUrl };
+    setProccessing(true);
+    const imgUrl = await uploadImage(img[0]);
+    const user = { name, email, status: "unverified", userRule, img: imgUrl };
     createUserWithEmail(email, pass)
       .then((result) => {
-        uploadImage(img[0]).then((data) => setImgUrl(data));
+        const email = result?.user?.email;
+        fetch(`${process.env.REACT_APP_SERVER_API}/jwt?email=${email}`)
+          .then((res) => res.json())
+          .then((token) =>
+            localStorage.setItem("access-token", token?.accesstoken)
+          );
         updateUserProfile(name, imgUrl);
         saveUser(user);
+        setProccessing(false);
+        toast.success("Login Successful");
+        navigate(state?.from || "/", { replace: true });
+        window.location.reload();
       })
-      .catch((err) => console.log(err.message));
-
-    // console.log(email, pass, userRule, img[0], data, imgUrl);
-    console.log(user);
+      .catch((err) => {
+        setProccessing(false);
+        toast.error(err.message);
+      });
   };
 
   const googleLogin = () => {
     loginWithGoogle()
-      .then((res) => console.log(res.user))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        const mail = res?.user?.email;
+        fetch(`${process.env.REACT_APP_SERVER_API}/jwt?email=${mail}`)
+          .then((res) => res.json())
+          .then((token) =>
+            localStorage.setItem("access-token", token?.accesstoken)
+          );
+        const { displayName: name, photoURL: img, email } = res?.user;
+        const user = {
+          name,
+          email,
+          img,
+          status: "unverified",
+          userRule: "buyer",
+        };
+        saveUser(user);
+        toast.success("Login Successful");
+        navigate(state?.from || "/", { replace: true });
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   return (
@@ -93,8 +128,8 @@ const Register = () => {
               </label>
               <input
                 className="w-full border-b border-slate-200 bg-transparent outline-none py-1"
-                type="text"
-                placeholder="password"
+                type="password"
+                placeholder="Password"
                 {...register("pass")}
               />
 
@@ -124,10 +159,16 @@ const Register = () => {
               <button
                 type="submit"
                 className="btn bg-orange-500 hover:bg-orange-400 w-1/2 text-white font-roboto py-2">
-                Login
+                {isProccessing ? <SmallLoader /> : "Register"}
               </button>
             </div>
           </form>
+          <p className="text-center font-roboto text-sm">
+            Already have an Account?
+            <Link className="text-orange-500" to="/login">
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

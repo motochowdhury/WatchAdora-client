@@ -1,23 +1,44 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function BookingModal({ isOpen, setIsOpen, book }) {
-  const { _id, name, productName, email, resalePrice } = book;
+  const {
+    productId,
+    userName,
+    productName,
+    productImg,
+    sellerEmail,
+    email,
+    resalePrice,
+    paymentStatus,
+  } = book;
   const { register, handleSubmit, reset } = useForm();
 
   // Save Booking
   const saveBooking = ({ phone, meetingLocation }) => {
     const bookingData = {
-      productId: _id,
+      userName,
+      productId,
       productName,
       email,
       resalePrice,
       phone,
       meetingLocation,
+      productImg,
+      paymentStatus,
+      sellerEmail,
     };
-
-    console.log(bookingData);
+    axios
+      .post(`${process.env.REACT_APP_SERVER_API}/booking`, bookingData, {
+        headers: {
+          authorization: `bearar ${localStorage.getItem("access-token")}`,
+        },
+      })
+      .then((data) => toast.success("Booking Successfull"))
+      .catch((err) => toast.error(err));
     reset();
   };
   return (
@@ -59,7 +80,7 @@ export default function BookingModal({ isOpen, setIsOpen, book }) {
                       <div className="w-9/12 mx-auto space-y-2">
                         <input
                           readOnly
-                          defaultValue={name}
+                          defaultValue={userName}
                           className="border text-sm font-roboto w-full rounded outline-none px-2 py-1"
                           type="text"
                         />

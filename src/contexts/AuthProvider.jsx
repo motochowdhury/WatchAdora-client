@@ -59,8 +59,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currUser) => {
-      setLoading(false);
       setUser(currUser);
+      setLoading(false);
     });
   }, []);
 

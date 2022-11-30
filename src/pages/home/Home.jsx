@@ -1,12 +1,16 @@
 import React from "react";
+import Advertisement from "./Advertisement";
 import Banner from "./Banner";
 import Categories from "./Categories";
+import Marketing from "./Marketing";
 
 const Home = () => {
   return (
-    <div className="h-screen w-full z-20 backdrop-blur-md dark:bg-white/20">
+    <div>
       <Banner />
       <Categories />
+      <Advertisement />
+      <Marketing />
     </div>
   );
 };

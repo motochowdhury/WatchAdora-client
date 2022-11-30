@@ -2,24 +2,56 @@ import React from "react";
 import loginImg from "../../assets/login img@3x.png";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { saveUser } from "../../api/registerApi";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { loginUserByEmail, loginWithGoogle } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
   const loginUser = (data) => {
     const { email, pass } = data;
     loginUserByEmail(email, pass)
-      .then((res) => console.log(res.user))
-      .catch((err) => console.log(err.message));
+      .then((res) => {
+        const mail = res?.user?.email;
+        fetch(`${process.env.REACT_APP_SERVER_API}/jwt?email=${mail}`)
+          .then((res) => res.json())
+          .then((token) =>
+            localStorage.setItem("access-token", token?.accesstoken)
+          );
+        toast.success("Login Successful");
+        navigate(state?.from || "/", { replace: true });
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   const googleLogin = () => {
     loginWithGoogle()
-      .then((res) => console.log(res.user))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        const mail = res?.user?.email;
+        fetch(`${process.env.REACT_APP_SERVER_API}/jwt?email=${mail}`)
+          .then((res) => res.json())
+          .then((token) =>
+            localStorage.setItem("access-token", token?.accesstoken)
+          );
+        const { displayName: name, photoURL: img, email } = res?.user;
+        const user = {
+          name,
+          email,
+          status: "unverified",
+          userRule: "buyer",
+          img,
+        };
+        saveUser(user);
+        toast.success("Login Successful");
+        navigate(state?.from || "/", { replace: true });
+      })
+      .catch((err) => toast.error(err.message));
   };
   return (
     <div className="py-20">
