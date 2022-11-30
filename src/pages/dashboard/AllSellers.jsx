@@ -4,6 +4,16 @@ import { deleteSeller, verifySeller } from "../../api/user";
 import profile from "../../assets/unknown.png";
 
 const AllSellers = () => {
+  const { data = [], refetch } = useQuery({
+    queryKey: ["sellers"],
+    queryFn: () =>
+      fetch(`${process.env.REACT_APP_SERVER_API}/admin/sellers`, {
+        headers: {
+          authorization: `bearar ${localStorage.getItem("access-token")}`,
+        },
+      }).then((res) => res.json()),
+  });
+
   return (
     <div>
       <div className="my-28 w-4/5 mx-auto text-sm font-poppins">
